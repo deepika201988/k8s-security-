@@ -75,7 +75,17 @@ Static pwd file
 
 remeber kubeapi service and various options where we need to add this path  --basic-auth-file=user-details.csv in kubeapi service file and then restart kubeapi server to take effect 
 
- - similarly instead of having static password file we can also have static token file  user-token-details.csv instead of pwd we specify a token pass tht token file as option 
+ - similarly instead of having static password file we can also have static token file  user-token-details.csv instead of pwd we specify a token pass tht token file as option token auth file to the kube-apiserver
+while authenticating specify the token as an authorization barrier token to your request 
+like this curl -v -k https://master-node-ip:6443/apu/v1/pods --header "Authorization: Bearer kpjcvbI7djjfj"
+
+Note:
+
+this is not recommended authentication mechanism as it is insecure
+consider volume mount while providing the auth file in kubeadm setup
+setup role based authorisation 
+
+
 
 
 
