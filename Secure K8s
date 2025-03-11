@@ -1,1 +1,86 @@
+Secure Hosts:
+ - Password based authentication disabled 
+ - SSH key based authentication 
+
+Kube api is center of all operations with k8s
+we interact with it through control utility or by accessing the API directly 
+through this we can perfomr any operation on the cluster 
+
+Controlling access to api server itself 
+
+
+-----------------------------------------
+
+Need to make 2 type of decision 
+
+who can access the cluster 
+
+- who can access the API SERVER - Authentication 
+   Files - Username and Passwords
+   Files- Username and Tokens
+   certificates
+   External authentication Providers - LDAP
+   Service accounts
+
+and wht they can do - Authorization
+   - RBAC Authorization
+   - ABAC authorised based access control Authorization
+   - Node Authorization
+  - WebHook Mode
+
+=====================
+All the communication btw etcd, kube controller manager, kubelet, kube proxy, kubeapi will be secured by TLS encryption
+
+Communication within the cluster 
+- default all pods can access all other pods within the cluster 
+
+Access can be restricted by pods with network policy
+
+=====================
+
+Admins, Developers, Application End Users
+
+ - Security of end users who access the applications deployed on the cluster is managed by application themselv internally 
+
+Our focus is users access to k8s cluster for admin purpose 
+
+we are left with humans - admins and developers and RObots such as other processes or services or application tht require access to cluster 
+
+k8s doesnt manage user accounts natively . It relies on external  source like file with user details and certificates or third party identity services like LDAP to manage users 
+
+
+we cannot see the list or create users in k8s ( k create user or k list users) we cannot do it 
+
+we can  create and manage service accounts using k8s API 
+
+==============================
+
+ All user access is managed by the API server whether we are accessing the cluster through kube ctrl -> kubectl by user  tool or API directly -> curl https://kube-server-ip:6443/ by kubeapi server
+
+api server authenticates before processing it 
+
+diff mechanisms to authenticate are 
+
+- static pwd file 
+- static token file 
+- certificates
+- identity services like ldap 
+
+===================================
+
+Static pwd file 
+- create a list of users  and pwds in a csv file ( --basic-auth-file=user-details.csv) and use tht souc=rces for user info. File has 3 column  pwd , username, userid
+
+ we can pass the filename as option to kube-apiserver 
+
+remeber kubeapi service and various options where we need to add this path  --basic-auth-file=user-details.csv in kubeapi service file and then restart kubeapi server to take effect 
+
+ - similarly instead of having static password file we can also have static token file  user-token-details.csv instead of pwd we specify a token pass tht token file as option 
+
+
+
+
+
+
+
 
